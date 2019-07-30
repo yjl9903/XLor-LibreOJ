@@ -25,7 +25,7 @@ int n, L, c[maxn], q[maxn];
 ll pre[maxn], dp[maxn];
 
 ll gu(int i, int j) {
-    return dp[i] + pre[i] * pre[i] + 2 * (L + 1) * pre[i] - dp[j] - pre[j] * pre[j] - 2 * (L + 1) * pre[j];
+    return dp[i] + pre[i] * pre[i] - dp[j] - pre[j] * pre[j];
 }
 ll gd(int i, int j) {
     return pre[i] - pre[j];
@@ -39,7 +39,7 @@ int main() {
     for (int i = 1; i <= n; i++) pre[i] += i;
     int l = 1, r = 1;
     for (int i = 1; i <= n; i++) {
-        while (l < r && gu(q[l + 1], q[l]) < 2 * gd(q[l + 1], q[l]) * pre[i]) l++;
+        while (l < r && gu(q[l + 1], q[l]) < 2 * gd(q[l + 1], q[l]) * (pre[i] - 1 - L)) l++;
         int j = q[l];
         dp[i] = dp[j] + (pre[i] - pre[j] - 1 - L) * (pre[i] - pre[j] - 1 - L);
         dbg(i, dp[i], l, r);
